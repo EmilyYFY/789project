@@ -1,8 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from PIL import Image
-import random
-import cv2
 
 
 
@@ -11,9 +8,8 @@ class canvas:
         self.windowsize=64
         self.canvas=np.ones((self.windowsize,self.windowsize),np.uint8)*255
         self.action_space=8
-        # self.similarity=0.0
+        self.similarity=0.8
         self.state_space=self.windowsize*self.windowsize*2
-        # self.state=0
 
         self.brushx=self.windowsize//2
         self.brushy=self.windowsize//2
@@ -29,11 +25,10 @@ class canvas:
         im=Image.fromarray(np.uint8(self.canvas))
         im.show()
 
-    # number the current canvas to a state(a number between 0 to state_space)
-    # def convert2state(self,state):
-    #
-    #     index=np.argwhere(self.canvas==0)
-    #     l = len(index)
+    # decide horizon(whether the pictures match)
+    def get_similarity(self,cnn_output):
+        done = bool(cnn_output >= self.similarity)
+        return done
 
     def step(self,action):
         # 0 1 2
@@ -66,6 +61,14 @@ class canvas:
             # self.brushx = np.random.randint(0, self.windowsize)
             # self.brushy = np.random.randint(0, self.windowsize)
         self.canvas[self.brushy,self.brushx]=0
+
+    def get_reward(self,done):
+        if done:
+            reward=1000.0
+        else:
+            reward=-1.0
+        return reward
+
 
 
 
