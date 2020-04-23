@@ -59,7 +59,7 @@ class CNN(nn.Module):
             nn.MaxPool2d(kernel_size=2, stride=2))
             
         self.ly=nn.Sequential(nn.Linear(512,512),
-            nn.Dropout(0.5),
+            #nn.Dropout(0.5),
             nn.Linear(512,4))
             
 
@@ -88,4 +88,6 @@ if __name__ == "__main__":
         img = Image.open( path )
         data = np.asarray(img)
         #print(data.shape)
+        
+        #evaluate(data,label) here label from 0~3
         print(evaluate(data,0))
