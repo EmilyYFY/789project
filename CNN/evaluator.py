@@ -10,6 +10,7 @@ import torch.nn as nn
 import numpy as np
 import torch.nn.functional as F
 from PIL import Image
+import skimage.color
 class CNN(nn.Module):
     def __init__(self):
         super(CNN, self).__init__()
@@ -80,14 +81,28 @@ def evaluate(data,label):
     output = net(image)
     x = F.softmax(output,dim=1)
     x=x.data.numpy()
-    return x[0,label]
+    prob=x[0,label]
+    threshold=0.995 #probability where reward change from negative to positive
+    negreward=-2    #negtive reward when prob is small
+    maxreward=100   #reward when probability =1
+    a=(np.log(maxreward-negreward)-np.log(-negreward))/(1-threshold)
+    b=a*threshold-np.log(-negreward)
+    reward=np.exp(a*prob-b)+negreward
+    return reward
+import matplotlib.pyplot as plt
 if __name__ == "__main__":
     for i in range(10):
         path="./test_doodle/"+str(i+1)+".jpg"
-        print(path)
+        #print(path)
         img = Image.open( path )
         data = np.asarray(img)
-        #print(data.shape)
+        if data.shape[-1]==3:
+            data=skimage.color.rgb2gray(data)
         
+        #print(data.shape)
+        fig, ax = plt.subplots()
+        fig.set_size_inches(1, 1)
+        ax.imshow(img,cmap='Greys_r')
+        plt.show()
         #evaluate(data,label) here label from 0~3
-        print(evaluate(data,0))
+        print("Triangle: {:.8f} Star: {:.8f} Square: {:.8f} Circle: {:.8f}".format(evaluate(data,0),evaluate(data,1),evaluate(data,2),evaluate(data,3)))
