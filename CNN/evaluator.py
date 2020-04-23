@@ -91,7 +91,7 @@ def evaluate(data,label):
     return reward
 import matplotlib.pyplot as plt
 if __name__ == "__main__":
-    for i in range(10):
+    for i in range(16):
         path="./test_doodle/"+str(i+1)+".jpg"
         #print(path)
         img = Image.open( path )
