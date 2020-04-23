@@ -35,32 +35,32 @@ class canvas:
         # 3 P 4
         # 5 6 7
         if action==0:
-            self.brushx -= 1
-            self.brushy -= 1
+            self.brushx -= 2
+            self.brushy -= 2
         elif action==1:
-            self.brushy -= 1
+            self.brushy -= 2
         elif action==2:
-            self.brushx += 1
-            self.brushy -= 1
+            self.brushx += 2
+            self.brushy -= 2
         elif action==3:
-            self.brushx -= 1
+            self.brushx -= 2
         elif action==4:
-            self.brushx += 1
+            self.brushx += 2
         elif action==5:
-            self.brushx -= 1
-            self.brushy += 1
+            self.brushx -= 2
+            self.brushy += 2
         elif action==6:
-            self.brushy += 1
+            self.brushy += 2
         elif action==7:
-            self.brushx += 1
-            self.brushy += 1
+            self.brushx += 2
+            self.brushy += 2
         # if the brush hits the frame, set the brush to the center
-        if (self.brushx<0 or self.brushx>31 or self.brushy<0 or self.brushy>31):
+        if (self.brushx<1 or self.brushx>(self.windowsize-3) or self.brushy<1 or self.brushy>(self.windowsize-3)):
             self.brushx = self.windowsize // 2
             self.brushy = self.windowsize // 2
             # self.brushx = np.random.randint(0, self.windowsize)
             # self.brushy = np.random.randint(0, self.windowsize)
-        self.canvas[self.brushy,self.brushx]=0
+        self.canvas[self.brushy-1:self.brushy+2,self.brushx-1:self.brushx+2]=0
 
     def get_reward(self,done):
         if done:
