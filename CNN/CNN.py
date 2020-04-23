@@ -118,7 +118,7 @@ class CNN(nn.Module):
             nn.Linear(512,4))
             
 
-    def forward(self, x):
+    def forward(self, x):       
         x = self.convlayer(x)
         x = x.view(-1, 512)
         #x = F.softmax(self.fc(x),dim=1)
@@ -143,11 +143,11 @@ cnn = CNN()
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 cnn.to(device)
-'''
+
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(cnn.parameters(), lr=0.001, weight_decay=1e-4)
 print('On gpu :',next(cnn.parameters()).is_cuda)
-
+'''
 nepo=10
 for epoch in range(nepo):  # loop over the dataset multiple times
 

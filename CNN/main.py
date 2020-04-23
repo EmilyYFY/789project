@@ -18,3 +18,4 @@ label=0
 #'triangle', 'star', 'square', 'circle' representing 0,1,2,3
 print(evaluate(data,label))
 
+
