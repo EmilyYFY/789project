@@ -16,6 +16,5 @@ label=0
 
 #inpute data should be 60*60, label is the class
 #'triangle', 'star', 'square', 'circle' representing 0,1,2,3
-print(evaluate(data,0))
-
+print(evaluate(data,label))
 
